@@ -81,6 +81,7 @@ free(mem_list[index]);
 `*mem_list[index]` is just a pointer to the `flavor` chunk for a given order. And, obviously, we control the flavor for any given order. If we overwrite the GOT address of `free` with the address of `system`, then the call becomes `system(*mem_list[index])`. As mentioned before, this call can be rewritten as `system(pointer_to_flavor_chunk)` because `*mem_list[index]` is a pointer to the `flavor` chunk. If we specify the flavor as `/bin/sh`, the call becomes `system(pointer_to_bin_sh)`. Do you see where we're going? This function call gives us a shell on the remote machine.
 
 ## Exploit
+
 1. Run the program and provide any random username and length to begin with (really doesn't matter).
 
 2. Create a new order and specify any random flavor (again, doesn't matter for now). The order ID for this order should be 0, because it's the first order.
@@ -93,7 +94,7 @@ free(mem_list[index]);
 
 6. Next up, we need to leak the data present in the newly allocated pointer to `free`'s GOT, which will be the runtime address of `free`. For that, we may use option 2 (view order status) which will simply print out the desired address because of the pointer dereference.
 
-7. We calculate the libc base by subtracting `free`'s fixed offset in the libc from the leaked runtime address, which gives us the runtime base of the libc.
+7. Before anything else, we're gonna need the libc binary. There are many ways to get it, including making use of the leaked GOT addresses, but a much easier way is to pull out the libc binary directly from the challenge docker image. Because the challenge uses the `ubuntu:22.04` image, we could just get the binary from there. Now that we have the libc, we calculate the libc base by subtracting `free`'s fixed offset from its leaked runtime address, which gives us the libc base.
 
 8. Relative to this base, we can now calculate pointers to other useful functions like `system`. Because we also have arbitrary write, we can simply write arbitrary addresses into `free`'s GOT address, for example, replacing it with the address of `system`, and we're going to do exactly that. It's worth noting that in the GOT table, the address of `free` is directly followed by the address of `puts`. Accidentally overwriting `puts` may cause undefined segmentation faults to occur, which is bound to happen because at least one trailing newline character will overflow into the GOT of `puts`. To fix this, we can just overwrite the GOT of `puts` with its own runtime address, essentially causing no change to occur in that function. The newline overflow occurs in the function present after `puts`, which is `__stack_chk_fail`: a function which can never be run in our program (we aren't overwriting the canary). Overwriting this function's address hardly matters.
 
