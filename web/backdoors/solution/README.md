@@ -1,6 +1,8 @@
 # Backdoors
 **Category**: Web Exploitation
+
 **Points**: 350
+
 **Difficulty**: Easy
 
 ## Recon
