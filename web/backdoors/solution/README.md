@@ -1,9 +1,4 @@
-# Backdoors
-**Category**: Web Exploitation
-
-**Points**: 350
-
-**Difficulty**: Easy
+# Backdoors (Web)
 
 ## Recon
 We are provided a website that seems to be a simple bunny blog (there are countless pics of bunnies on the cover page). On scrolling down, we see that there are some links to other pages on the site.
