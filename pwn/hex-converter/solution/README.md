@@ -1,4 +1,4 @@
-# Hex Converter
+# Hex Converter (Pwn)
 ## Recon
 We are given a service that converts any given text into hex, and prints the result out. We can do four things in the program:
 
