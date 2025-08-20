@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        form {
+            margin-top: 1vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        input {
+            display: block;
+            outline: none;
+            padding: 1vw;
+            font-size: 1em;
+            margin: 0.75vh 0;
+            width: 30vw;
+            border: 2px solid dodgerblue;
+            border-radius: 100vw;
+        }
+        input[type=submit] {
+            border: none;
+            border-radius: 100vw;
+            background-color: #06053b;
+            color: white;
+            cursor: pointer;
+        }
+        .error {color: darkred;}
+    </style>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+    <div class="mid">
+        <h1>Register</h1>
+        <form action="" method="POST">
+            <input name="username" placeholder="Username: " autocomplete="off">
+            <input name="password" type="password" placeholder="Password: ">
+            <input name="cnfpassword" type="password" placeholder="Confirm Password: ">
+            <% if (error) { %>
+                <p class="error"><%= error %></p>
+            <% } %>
+            <input type="submit" value="Register">
+            <p>Already have an account? <a href="/login">Login instead!</a></p>
+        </form>
+    </div>
+</body>
+</html>

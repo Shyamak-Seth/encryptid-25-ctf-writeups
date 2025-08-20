@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | <%- username %></title>
+</head>
+<body>
+    <%- include('./partials/navbar.ejs') %>
+    <div class="mid">
+        <h1><%= title %></h1>
+        <p style="width: 30vw; text-align: center; padding: 1vh 0; font-size: 1vw;"><%= description %></p>
+        <p style="width: 30vw; text-align: center; margin-bottom: 2vh; font-size: 1vw;">~ <%= username %></p>
+        <button type="submit" class="btn" onclick="sendForReview()">Send for review</button>
+        <% if (typeof message != 'undefined' && message) { %>
+            <script>alert("<%= message %>")</script>
+        <% } %>
+    </div>
+    <script src="/application.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+name: tsctf
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: ctf-nginx
+    ports:
+      - "7001:7001"  # challs.techsyndicate.us:7001 - pwn: hex converter
+      - "7002:7002"  # challs.techsyndicate.us:7002 - pwn: sudoku
+      - "7003:7003"  # challs.techsyndicate.us:7003 - pwn: heaps of bagels
+      - "7004:7004"  # challs.techsyndicate.us:7004 - web: xss
+      - "7005:7005"  # challs.techsyndicate.us:7005 - web: backdoors
+      - "7006:7006"  # challs.techsyndicate.us:7006 - web: tickets
+      - "7007:7007"  # challs.techsyndicate.us:7007 - crypto: the oracle's deck
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - pwn-hex-converter
+      - pwn-sudoku
+      - pwn-heaps-of-bagels
+      - web-backdoors
+      - web-xss
+      - web-tickets
+      - crypto-the-oracles-deck
+    restart: unless-stopped
+    networks:
+      - ctf_net
+
+  pwn-hex-converter:
+    build:
+      context: ./pwn/hex-converter/source
+    container_name: pwn-hex-converter
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+
+  pwn-sudoku:
+    build:
+      context: ./pwn/sudoku/source
+    container_name: pwn-sudoku
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+
+  pwn-heaps-of-bagels:
+    build:
+      context: ./pwn/heaps-of-bagels/source
+    container_name: pwn-heaps-of-bagels
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+
+  web-backdoors:
+    build:
+      context: ./web/backdoors/source
+    container_name: web-backdoors
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+
+  web-xss:
+    build:
+      context: ./web/xss-solutions/source
+    container_name: web-xss
+    env_file:
+      - .env.xss
+    command: ["node", "server.js"]
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+  
+  web-tickets:
+    build:
+      context: ./web/tickets/source
+    container_name: web-tickets
+    expose:
+      - "5000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+  
+  crypto-the-oracles-deck:
+    build:
+      context: ./crypto/the-oracles-deck/source
+    container_name: crypto-the-oracles-deck
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - ctf_net
+    
+networks:
+  ctf_net:
+    driver: bridge

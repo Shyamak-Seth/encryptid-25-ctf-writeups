@@ -1,0 +1,84 @@
+<style>
+    * {box-sizing: border-box; line-height: 1.35;}
+    body {
+        font-family: sans-serif;
+        margin: 0px;
+        overflow-x: hidden;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        background: #5ccae6;
+    }
+
+    .nav-items {
+        display: flex;
+    }
+    .nav-item {
+        cursor: pointer;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+    .nav-item:hover {
+        background: #51a1b5;
+    }
+
+    .nav-item a {
+        text-decoration: none;
+        color: black;
+        padding: 1vw 1.5vw;
+        display: inline-block;
+    }
+    .mid {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #afebfa;
+    }
+    .btn {
+        background-color: #111;
+        color: white;
+        font-size: 1vw;
+        padding: 1vw 1.4vw;
+        border: none;
+        outline: none;
+        border-radius: 100vw;
+        cursor: pointer;
+    }
+    h1, p {
+        margin: 0px;
+    }
+    h1 {
+        font-size: 3vw;
+    }
+</style>
+
+<div class="navbar">
+    <div class="nav-items">
+        <div class="nav-item">
+            <a href="/">Home</a>
+        </div>
+        <div class="nav-item">
+            <a href="/login">Login</a>
+        </div>
+        <div class="nav-item">
+            <a href="/register">Register</a>
+        </div>
+        <div class="nav-item">
+            <a href="/apply">Apply</a>
+        </div>
+        <div class="nav-item">
+            <a href="/admin">Admin Panel</a>
+        </div>
+        <div class="nav-item">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
